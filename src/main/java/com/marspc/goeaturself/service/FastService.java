@@ -5,6 +5,7 @@ import com.marspc.goeaturself.repository.IFastRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -25,10 +26,11 @@ public class FastService {
         iFastRepository.save(fast);
     }
 
-    public void updateFast(Long fastId) {
+    @Transactional
+    public void updateFastUserId(Long fastId, Long userId) {
         checkIfFastExist(fastId);
-
-
+        Fast fast = iFastRepository.getOne(fastId);
+        fast.setUserId(userId);
     }
 
     private void checkIfFastExist(Long fastId) {
