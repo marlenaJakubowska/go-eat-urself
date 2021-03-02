@@ -8,9 +8,18 @@ import java.time.LocalDate;
 public class Fast {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @SequenceGenerator(
+            name = "fast_sequence",
+            sequenceName = "fast_sequence",
+            allocationSize = 1
+    )
+
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "fast_sequence"
+    )
     private Long id;
+
 
     @Column(name = "user_id", nullable = false)
     private Long userId;

@@ -20,4 +20,8 @@ public class FastService {
     public List<Fast> getFasts() {
         return iFastRepository.findAll();
     }
+
+    public void addNewFast(Fast fast) {
+        iFastRepository.save(fast);
+    }
 }

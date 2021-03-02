@@ -3,9 +3,7 @@ package com.marspc.goeaturself.controller;
 import com.marspc.goeaturself.domain.Fast;
 import com.marspc.goeaturself.service.FastService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +18,31 @@ public class FastController {
         this.fastService = fastService;
     }
 
+    /*
+    GET methods
+     */
     @GetMapping
     public List<Fast> getFasts(){
         return fastService.getFasts();
     }
+
+
+    /*
+    POST methods
+     */
+    @PostMapping
+    public void addNewFast(@RequestBody Fast fast){
+        fastService.addNewFast(fast);
+    }
+
+
+    /*
+    PUT methods
+     */
+
+
+
+    /*
+    DELETE methods
+     */
 }
