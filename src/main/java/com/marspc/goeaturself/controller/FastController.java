@@ -32,6 +32,11 @@ public class FastController {
         return fastService.getTargetFastTime(fastId);
     }
 
+    @GetMapping(path = "get/isActive/{fastId}")
+    public boolean getIsActive(@PathVariable("fastId") Long fastId){
+        return fastService.getIsActive(fastId);
+    }
+
 
     /*
     POST methods
@@ -42,11 +47,10 @@ public class FastController {
     }
 
 
+
     /*
     PUT methods
      */
-
-
 
     /*
      First we type which Fast we want

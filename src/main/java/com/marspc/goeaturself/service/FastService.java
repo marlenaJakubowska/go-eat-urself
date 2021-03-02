@@ -45,4 +45,10 @@ public class FastService {
         Fast fast = iFastRepository.getOne(fastId);
         return fast.getTargetFastTime();
     }
+
+    public boolean getIsActive(Long fastId) {
+        checkIfFastExist(fastId);
+        Fast fast = iFastRepository.getOne(fastId);
+        return fast.isActive();
+    }
 }
