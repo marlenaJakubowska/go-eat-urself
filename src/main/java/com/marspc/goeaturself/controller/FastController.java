@@ -51,10 +51,10 @@ public class FastController {
      First we type which Fast we want
      and then we type userId for update
      */
-    @PutMapping(path = "update/userId/{fastId}/{userId}")
-    public void updateUserIdInFast(@PathVariable("userId") Long userId,
-                                   @PathVariable("fastId") Long fastId){
-        fastService.updateFastUserId(fastId, userId);
+    @PutMapping(path = "update/userId/{fastId}/{targetFastTime}")
+    public void updateTargetFastTime(@PathVariable("targetFastTime") Long targetFastTime,
+                                     @PathVariable("fastId") Long fastId){
+        fastService.updateTargetFastTime(fastId, targetFastTime);
     }
 
 

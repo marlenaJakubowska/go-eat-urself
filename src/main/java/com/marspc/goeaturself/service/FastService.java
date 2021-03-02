@@ -27,10 +27,10 @@ public class FastService {
     }
 
     @Transactional
-    public void updateFastUserId(Long fastId, Long userId) {
+    public void updateTargetFastTime(Long fastId, Long targetFastTime) {
         checkIfFastExist(fastId);
         Fast fast = iFastRepository.getOne(fastId);
-        fast.setUserId(userId);
+        fast.setTargetFastTime(targetFastTime);
     }
 
     private void checkIfFastExist(Long fastId) {
