@@ -18,12 +18,18 @@ public class FastController {
         this.fastService = fastService;
     }
 
+
     /*
     GET methods
      */
     @GetMapping
     public List<Fast> getFasts(){
         return fastService.getFasts();
+    }
+
+    @GetMapping(path = "get/targetFastTime/{fastId}")
+    public Integer getTargetFastTime(@PathVariable("fastId") Long fastId){
+        return fastService.getTargetFastTime(fastId);
     }
 
 
@@ -40,19 +46,14 @@ public class FastController {
     PUT methods
      */
 
-    /*
-    TODO: Update Fast previousFastId,
-      targetFastTime, startDateAndTime,
-      endDateAndTime, isActive
-     */
 
 
     /*
      First we type which Fast we want
-     and then we type userId for update
+     and then we type target fast time for update
      */
     @PutMapping(path = "update/userId/{fastId}/{targetFastTime}")
-    public void updateTargetFastTime(@PathVariable("targetFastTime") Long targetFastTime,
+    public void updateTargetFastTime(@PathVariable("targetFastTime") Integer targetFastTime,
                                      @PathVariable("fastId") Long fastId){
         fastService.updateTargetFastTime(fastId, targetFastTime);
     }

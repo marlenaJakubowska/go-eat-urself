@@ -28,7 +28,7 @@ public class Fast {
     private Long previousFastId;
 
     @Column(name = "target_fast_time", nullable = false)
-    private Long targetFastTime;
+    private Integer targetFastTime;
 
     @Column(name = "start_date_and_time", nullable = false)
     private LocalDate startDateAndTime;
@@ -67,11 +67,11 @@ public class Fast {
         this.previousFastId = previousFastId;
     }
 
-    public Long getTargetFastTime() {
+    public Integer getTargetFastTime() {
         return targetFastTime;
     }
 
-    public void setTargetFastTime(Long targetFastTime) {
+    public void setTargetFastTime(Integer targetFastTime) {
         this.targetFastTime = targetFastTime;
     }
 

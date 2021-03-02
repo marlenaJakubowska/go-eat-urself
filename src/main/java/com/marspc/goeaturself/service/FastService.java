@@ -27,7 +27,7 @@ public class FastService {
     }
 
     @Transactional
-    public void updateTargetFastTime(Long fastId, Long targetFastTime) {
+    public void updateTargetFastTime(Long fastId, Integer targetFastTime) {
         checkIfFastExist(fastId);
         Fast fast = iFastRepository.getOne(fastId);
         fast.setTargetFastTime(targetFastTime);
@@ -38,5 +38,11 @@ public class FastService {
         if (!isFastInDb){
             throw new IllegalStateException("Fast does not exist in database");
         }
+    }
+
+    public Integer getTargetFastTime(Long fastId) {
+        checkIfFastExist(fastId);
+        Fast fast = iFastRepository.getOne(fastId);
+        return fast.getTargetFastTime();
     }
 }
