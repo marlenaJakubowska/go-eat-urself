@@ -40,6 +40,15 @@ public class FastController {
     PUT methods
      */
 
+    /*
+    TODO: Update Fast by userId, previousFastId,
+      targetFastTime, startDateAndTime,
+      endDateAndTime, isActive
+     */
+    @PutMapping(path = "{fastId}")
+    public void updateFast(@PathVariable("fastId") Long fastId){
+        fastService.updateFast(fastId);
+    }
 
 
     /*

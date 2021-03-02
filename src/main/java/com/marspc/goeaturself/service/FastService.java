@@ -24,4 +24,17 @@ public class FastService {
     public void addNewFast(Fast fast) {
         iFastRepository.save(fast);
     }
+
+    public void updateFast(Long fastId) {
+        checkIfFastExist(fastId);
+
+
+    }
+
+    private void checkIfFastExist(Long fastId) {
+        boolean isFastInDb = iFastRepository.existsById(fastId);
+        if (!isFastInDb){
+            throw new IllegalStateException("Fast does not exist in database");
+        }
+    }
 }
