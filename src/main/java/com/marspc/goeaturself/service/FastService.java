@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -65,4 +66,28 @@ public class FastService {
         Fast fast = iFastRepository.getOne(fastId);
         return fast.getEndDateAndTime();
     }
+
+
+    @Transactional
+    public void updateStartDateAndTime(Long fastId, String startDateAndTime) {
+        checkIfFastExist(fastId);
+        LocalDateTime localDateTime = convertStringToLocalDateTime(startDateAndTime);
+        Fast fast = iFastRepository.getOne(fastId);
+        fast.setStartDateAndTime(localDateTime);
+    }
+
+    @Transactional
+    public void updateEndDateAndTime(Long fastId, String endDateAndTime) {
+        checkIfFastExist(fastId);
+        LocalDateTime localDateTime = convertStringToLocalDateTime(endDateAndTime);
+        Fast fast = iFastRepository.getOne(fastId);
+        fast.setEndDateAndTime(localDateTime);
+    }
+
+    private LocalDateTime convertStringToLocalDateTime(String startDateAndTime) {
+        DateTimeFormatter dateTimeFormatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDateTime.parse(startDateAndTime,dateTimeFormatter);
+    }
+
 }

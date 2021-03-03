@@ -48,6 +48,7 @@ public class FastController {
         return fastService.getEndDateAndTime(fastId);
     }
 
+
     /*
     POST methods
      */
@@ -62,18 +63,22 @@ public class FastController {
     PUT methods
      */
 
-    /*
-     First we type which Fast we want
-     and then we type target fast time for update
-     */
-    @PutMapping(path = "update/userId/{fastId}/{targetFastTime}")
+    @PutMapping(path = "update/startDateAndTime/{fastId}/{startDateAndTime}")
+    public void updateStartDateAndTime(@PathVariable("fastId") Long fastId,
+                                       @PathVariable("startDateAndTime") String startDateAndTime){
+        fastService.updateStartDateAndTime(fastId, startDateAndTime);
+    }
+
+    @PutMapping(path = "update/endDateAndTime/{fastId}/{endDateAndTime}")
+    public void updateEndDateAndTime(@PathVariable("fastId") Long fastId,
+                                       @PathVariable("endDateAndTime") String endDateAndTime){
+        fastService.updateEndDateAndTime(fastId, endDateAndTime);
+    }
+
+    @PutMapping(path = "update/{fastId}/{targetFastTime}")
     public void updateTargetFastTime(@PathVariable("targetFastTime") Integer targetFastTime,
                                      @PathVariable("fastId") Long fastId){
         fastService.updateTargetFastTime(fastId, targetFastTime);
     }
 
-
-    /*
-    DELETE methods
-     */
 }
