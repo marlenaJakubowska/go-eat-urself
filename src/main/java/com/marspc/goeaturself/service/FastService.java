@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -50,5 +51,18 @@ public class FastService {
         checkIfFastExist(fastId);
         Fast fast = iFastRepository.getOne(fastId);
         return fast.isActive();
+    }
+
+    public LocalDateTime getStartAndDateTime(Long fastId) {
+        checkIfFastExist(fastId);
+        Fast fast = iFastRepository.getOne(fastId);
+        return fast.getStartDateAndTime();
+    }
+
+
+    public LocalDateTime getEndDateAndTime(Long fastId) {
+        checkIfFastExist(fastId);
+        Fast fast = iFastRepository.getOne(fastId);
+        return fast.getEndDateAndTime();
     }
 }

@@ -1,7 +1,7 @@
 package com.marspc.goeaturself.domain;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "fast")
@@ -31,10 +31,11 @@ public class Fast {
     private Integer targetFastTime;
 
     @Column(name = "start_date_and_time", nullable = false)
-    private LocalDate startDateAndTime;
+    LocalDateTime startDateAndTime;
+    //private LocalDate startDateAndTime;
 
     @Column(name = "end_date_and_time", nullable = false)
-    private LocalDate endDateAndTime;
+    private LocalDateTime endDateAndTime;
 
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
@@ -75,19 +76,19 @@ public class Fast {
         this.targetFastTime = targetFastTime;
     }
 
-    public LocalDate getStartDateAndTime() {
+    public LocalDateTime getStartDateAndTime() {
         return startDateAndTime;
     }
 
-    public void setStartDateAndTime(LocalDate tartDateAndTime) {
+    public void setStartDateAndTime(LocalDateTime tartDateAndTime) {
         this.startDateAndTime = tartDateAndTime;
     }
 
-    public LocalDate getEndDateAndTime() {
+    public LocalDateTime getEndDateAndTime() {
         return endDateAndTime;
     }
 
-    public void setEndDateAndTime(LocalDate endDateAndTime) {
+    public void setEndDateAndTime(LocalDateTime endDateAndTime) {
         this.endDateAndTime = endDateAndTime;
     }
 

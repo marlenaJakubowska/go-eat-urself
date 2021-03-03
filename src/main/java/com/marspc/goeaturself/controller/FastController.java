@@ -5,6 +5,7 @@ import com.marspc.goeaturself.service.FastService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -37,6 +38,15 @@ public class FastController {
         return fastService.getIsActive(fastId);
     }
 
+    @GetMapping(path = "get/startDateAndTime/{fastId}")
+    public LocalDateTime getStartDateAndTime(@PathVariable("fastId") Long fastId){
+       return fastService.getStartAndDateTime(fastId);
+    }
+
+    @GetMapping(path = "get/endDateAndTime/{fastId}")
+    public LocalDateTime getEndDateAndTime(@PathVariable("fastId") Long fastId){
+        return fastService.getEndDateAndTime(fastId);
+    }
 
     /*
     POST methods
