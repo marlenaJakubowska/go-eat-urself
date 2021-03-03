@@ -20,26 +20,13 @@ public class FastService {
         this.iFastRepository = iFastRepository;
     }
 
+
+
+    /*
+    GET methods
+     */
     public List<Fast> getFasts() {
         return iFastRepository.findAll();
-    }
-
-    public void addNewFast(Fast fast) {
-        iFastRepository.save(fast);
-    }
-
-    @Transactional
-    public void updateTargetFastTime(Long fastId, Integer targetFastTime) {
-        checkIfFastExist(fastId);
-        Fast fast = iFastRepository.getOne(fastId);
-        fast.setTargetFastTime(targetFastTime);
-    }
-
-    private void checkIfFastExist(Long fastId) {
-        boolean isFastInDb = iFastRepository.existsById(fastId);
-        if (!isFastInDb){
-            throw new IllegalStateException("Fast does not exist in database");
-        }
     }
 
     public Integer getTargetFastTime(Long fastId) {
@@ -60,13 +47,32 @@ public class FastService {
         return fast.getStartDateAndTime();
     }
 
-
     public LocalDateTime getEndDateAndTime(Long fastId) {
         checkIfFastExist(fastId);
         Fast fast = iFastRepository.getOne(fastId);
         return fast.getEndDateAndTime();
     }
 
+
+
+    /*
+    POST methods
+     */
+    public void addNewFast(Fast fast) {
+        iFastRepository.save(fast);
+    }
+
+
+
+    /*
+    PUT methods
+     */
+    @Transactional
+    public void updateTargetFastTime(Long fastId, Integer targetFastTime) {
+        checkIfFastExist(fastId);
+        Fast fast = iFastRepository.getOne(fastId);
+        fast.setTargetFastTime(targetFastTime);
+    }
 
     @Transactional
     public void updateStartDateAndTime(Long fastId, String startDateAndTime) {
@@ -82,6 +88,18 @@ public class FastService {
         LocalDateTime localDateTime = convertStringToLocalDateTime(endDateAndTime);
         Fast fast = iFastRepository.getOne(fastId);
         fast.setEndDateAndTime(localDateTime);
+    }
+
+
+
+    /*
+    private methods
+     */
+    private void checkIfFastExist(Long fastId) {
+        boolean isFastInDb = iFastRepository.existsById(fastId);
+        if (!isFastInDb){
+            throw new IllegalStateException("Fast does not exist in database");
+        }
     }
 
     private LocalDateTime convertStringToLocalDateTime(String startDateAndTime) {
