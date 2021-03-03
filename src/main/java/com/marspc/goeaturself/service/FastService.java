@@ -21,7 +21,6 @@ public class FastService {
     }
 
 
-
     /*
     GET methods
      */
@@ -54,14 +53,12 @@ public class FastService {
     }
 
 
-
     /*
     POST methods
      */
     public void addNewFast(Fast fast) {
         iFastRepository.save(fast);
     }
-
 
 
     /*
@@ -89,7 +86,6 @@ public class FastService {
         Fast fast = iFastRepository.getOne(fastId);
         fast.setEndDateAndTime(localDateTime);
     }
-
 
 
     /*
