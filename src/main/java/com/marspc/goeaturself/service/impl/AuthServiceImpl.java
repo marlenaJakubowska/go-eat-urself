@@ -1,6 +1,7 @@
 package com.marspc.goeaturself.service.impl;
 
 import com.marspc.goeaturself.domain.User;
+import com.marspc.goeaturself.domain.UserPrincipal;
 import com.marspc.goeaturself.exception.domain.EmailExistsException;
 import com.marspc.goeaturself.exception.domain.UserNotFoundException;
 import com.marspc.goeaturself.exception.domain.UsernameExistsException;
@@ -95,14 +96,33 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
 
     }
 
-
     private User findUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
-
     }
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findUserByUsername(username);
+        if (user == null) {
+            LOGGER.error("User not found by username: " + username);
+            throw new UsernameNotFoundException(NO_USER_FOUND_BY_USERNAME + username);
+        } else {
+            validateLoginAttempt(user);
+//            user.setLastLoginDateDisplay(user.getLastLoginDate());
+//            user.setLastLoginDate(new Date());
+            userRepository.save(user);
+            UserPrincipal userPrincipal = new UserPrincipal(user);
+            LOGGER.info(RETURNING_FOUND_USER_BY_USERNAME + username);
+            return userPrincipal;
+        }
     }
+
+    private void validateLoginAttempt(User user) {
+        if(user.getIsNonLocked()) {
+            user.setIsNonLocked(!loginAttemptService.hasExceededMaxAttempts(user.getUsername()));
+        } else {
+            loginAttemptService.evictUserFromLoginAttemptCache(user.getUsername());
+        }
+    }
+
 }
