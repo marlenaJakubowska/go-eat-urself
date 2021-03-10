@@ -1,6 +1,9 @@
 package com.marspc.goeaturself.service.impl;
 
 import com.marspc.goeaturself.domain.User;
+import com.marspc.goeaturself.exception.domain.EmailExistsException;
+import com.marspc.goeaturself.exception.domain.UserNotFoundException;
+import com.marspc.goeaturself.exception.domain.UsernameExistsException;
 import com.marspc.goeaturself.repository.UserRepository;
 import com.marspc.goeaturself.service.AuthService;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +21,9 @@ import org.slf4j.LoggerFactory;
 import javax.transaction.Transactional;
 import java.util.Date;
 
+import static com.marspc.goeaturself.constant.UserConstant.*;
 import static com.marspc.goeaturself.enums.Role.ROLE_USER;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Service
 @Transactional
@@ -38,7 +43,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
     }
 
     @Override
-    public User register(String firstName, String username, String email, String password) {
+    public User register(String firstName, String username, String email, String password) throws UsernameExistsException, UserNotFoundException, EmailExistsException {
         validateNewUsernameAndEmail(StringUtils.EMPTY, username, email);
         User user = new User();
         user.setFirstName(firstName);
@@ -58,7 +63,42 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
         return bCryptPasswordEncoder.encode(password);
     }
 
-    private void validateNewUsernameAndEmail(String empty, String username, String email) {
+    private User validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail)
+            throws EmailExistsException, UsernameExistsException, UserNotFoundException {
+        User userByNewUsername = findUserByUsername(newUsername);
+        User userByNewEmail = findUserByEmail(newEmail);
+        if(isNotBlank(currentUsername)) {
+            User currentUser = findUserByUsername(currentUsername);
+            if(currentUser == null) {
+                throw new UserNotFoundException(NO_USER_FOUND_BY_USERNAME + currentUsername);
+            }
+            if (userByNewUsername != null && !currentUser.getId().equals(userByNewUsername.getId())) {
+                throw new UsernameExistsException(USERNAME_ALREADY_EXISTS);
+            }
+            if(userByNewEmail != null && !currentUser.getId().equals(userByNewEmail.getId())) {
+                throw new EmailExistsException(EMAIL_ALREADY_EXISTS);
+            }
+            return currentUser;
+        } else {
+            if(userByNewUsername != null) {
+                throw new UsernameExistsException(USERNAME_ALREADY_EXISTS);
+            }
+            if(userByNewEmail != null) {
+                throw new EmailExistsException(EMAIL_ALREADY_EXISTS);
+            }
+            return null;
+        }
+    }
+
+    private User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+
+    }
+
+
+    private User findUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
+
     }
 
     @Override

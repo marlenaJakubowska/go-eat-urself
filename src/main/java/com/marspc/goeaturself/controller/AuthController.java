@@ -2,6 +2,9 @@ package com.marspc.goeaturself.controller;
 
 import com.marspc.goeaturself.domain.User;
 import com.marspc.goeaturself.exception.ExceptionHandling;
+import com.marspc.goeaturself.exception.domain.EmailExistsException;
+import com.marspc.goeaturself.exception.domain.UserNotFoundException;
+import com.marspc.goeaturself.exception.domain.UsernameExistsException;
 import com.marspc.goeaturself.security.JWTTokenProvider;
 import com.marspc.goeaturself.service.AuthService;
 import com.marspc.goeaturself.service.UserService;
@@ -30,7 +33,7 @@ public class AuthController extends ExceptionHandling {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
+    public ResponseEntity<User> register(@RequestBody User user) throws UserNotFoundException, EmailExistsException, UsernameExistsException {
         User newUser = authService.register(user.getFirstName(), user.getUsername(), user.getEmail(), user.getPassword());
         return new ResponseEntity<>(newUser, HttpStatus.OK);
     }
