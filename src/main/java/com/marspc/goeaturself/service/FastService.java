@@ -1,7 +1,7 @@
 package com.marspc.goeaturself.service;
 
 import com.marspc.goeaturself.domain.Fast;
-import com.marspc.goeaturself.repository.IFastRepository;
+import com.marspc.goeaturself.repository.FastRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,61 +13,52 @@ import java.util.List;
 @Service
 public class FastService {
     
-    private final IFastRepository iFastRepository;
+    private final FastRepository fastRepository;
 
     @Autowired
-    public FastService(IFastRepository iFastRepository) {
-        this.iFastRepository = iFastRepository;
+    public FastService(FastRepository fastRepository) {
+        this.fastRepository = fastRepository;
     }
 
 
-    /*
-    GET methods
-     */
     public List<Fast> getFasts() {
-        return iFastRepository.findAll();
+        return fastRepository.findAll();
     }
 
     public Integer getTargetFastTime(Long fastId) {
         checkIfFastExist(fastId);
-        Fast fast = iFastRepository.getOne(fastId);
+        Fast fast = fastRepository.getOne(fastId);
         return fast.getTargetFastTime();
     }
 
     public boolean getIsActive(Long fastId) {
         checkIfFastExist(fastId);
-        Fast fast = iFastRepository.getOne(fastId);
+        Fast fast = fastRepository.getOne(fastId);
         return fast.isActive();
     }
 
     public LocalDateTime getStartAndDateTime(Long fastId) {
         checkIfFastExist(fastId);
-        Fast fast = iFastRepository.getOne(fastId);
+        Fast fast = fastRepository.getOne(fastId);
         return fast.getStartDateAndTime();
     }
 
     public LocalDateTime getEndDateAndTime(Long fastId) {
         checkIfFastExist(fastId);
-        Fast fast = iFastRepository.getOne(fastId);
+        Fast fast = fastRepository.getOne(fastId);
         return fast.getEndDateAndTime();
     }
 
 
-    /*
-    POST methods
-     */
     public void addNewFast(Fast fast) {
-        iFastRepository.save(fast);
+        fastRepository.save(fast);
     }
 
 
-    /*
-    PUT methods
-     */
     @Transactional
     public void updateTargetFastTime(Long fastId, Integer targetFastTime) {
         checkIfFastExist(fastId);
-        Fast fast = iFastRepository.getOne(fastId);
+        Fast fast = fastRepository.getOne(fastId);
         fast.setTargetFastTime(targetFastTime);
     }
 
@@ -75,7 +66,7 @@ public class FastService {
     public void updateStartDateAndTime(Long fastId, String startDateAndTime) {
         checkIfFastExist(fastId);
         LocalDateTime localDateTime = convertStringToLocalDateTime(startDateAndTime);
-        Fast fast = iFastRepository.getOne(fastId);
+        Fast fast = fastRepository.getOne(fastId);
         fast.setStartDateAndTime(localDateTime);
     }
 
@@ -83,16 +74,13 @@ public class FastService {
     public void updateEndDateAndTime(Long fastId, String endDateAndTime) {
         checkIfFastExist(fastId);
         LocalDateTime localDateTime = convertStringToLocalDateTime(endDateAndTime);
-        Fast fast = iFastRepository.getOne(fastId);
+        Fast fast = fastRepository.getOne(fastId);
         fast.setEndDateAndTime(localDateTime);
     }
 
 
-    /*
-    private methods
-     */
     private void checkIfFastExist(Long fastId) {
-        boolean isFastInDb = iFastRepository.existsById(fastId);
+        boolean isFastInDb = fastRepository.existsById(fastId);
         if (!isFastInDb){
             throw new IllegalStateException("Fast does not exist in database");
         }
