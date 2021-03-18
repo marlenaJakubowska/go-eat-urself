@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import static com.marspc.goeaturself.constant.SecurityConstant.JWT_TOKEN_HEADER;
 
 @RestController
-@RequestMapping(path = {"/", "/auth"})
+@RequestMapping(path = { "api/auth"})
 public class AuthController extends ExceptionHandling {
 
     private AuthService authService;
@@ -40,16 +40,18 @@ public class AuthController extends ExceptionHandling {
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) throws UserNotFoundException, EmailExistsException, UsernameExistsException {
         User newUser = authService.register(user.getFirstName(), user.getUsername(), user.getEmail(), user.getPassword());
-        return new ResponseEntity<>(newUser, HttpStatus.OK);
+        //return new ResponseEntity<>(newUser, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody User user) {
+    public ResponseEntity<String> login(@RequestBody User user) {
         authenticate(user.getUsername(), user.getPassword());
         User loginUser = userService.findUserByUsername(user.getUsername());
         UserPrincipal userPrincipal = new UserPrincipal(loginUser);
         HttpHeaders jwtHeader = getJwtHeader(userPrincipal);
-        return new ResponseEntity<>(loginUser, jwtHeader, HttpStatus.OK);
+        return new ResponseEntity<>(String.format("Success! Hello, %s!", loginUser.getUsername()), jwtHeader, HttpStatus.OK);
     }
 
     private HttpHeaders getJwtHeader(UserPrincipal userPrincipal) {
