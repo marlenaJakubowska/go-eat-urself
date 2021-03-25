@@ -1,8 +1,12 @@
 package com.marspc.goeaturself.service;
 
 import com.marspc.goeaturself.fast.Fast;
+import com.marspc.goeaturself.fast.FastPage;
 import com.marspc.goeaturself.fast.FastRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -76,6 +80,12 @@ public class FastService {
         LocalDateTime localDateTime = convertStringToLocalDateTime(endDateAndTime);
         Fast fast = fastRepository.getOne(fastId);
         fast.setEndDateAndTime(localDateTime);
+    }
+
+    public Page<Fast> getFastPagination(FastPage fastPage){
+        Pageable pageable = PageRequest.of(fastPage.getPageNumber(),
+                fastPage.getPageSize());
+        return fastRepository.findAll(pageable);
     }
 
 

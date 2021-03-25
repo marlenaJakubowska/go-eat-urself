@@ -2,6 +2,9 @@ package com.marspc.goeaturself.fast;
 
 import com.marspc.goeaturself.service.FastService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -42,6 +45,11 @@ public class FastController {
     @GetMapping(path = "enddateandtime/{fastId}")
     public LocalDateTime getEndDateAndTime(@PathVariable("fastId") Long fastId){
         return fastService.getEndDateAndTime(fastId);
+    }
+
+    @GetMapping(path = "pagination")
+    public ResponseEntity<Page<Fast>> getFastPagination(FastPage fastPage){
+        return new ResponseEntity<>(fastService.getFastPagination(fastPage), HttpStatus.OK);
     }
 
 
