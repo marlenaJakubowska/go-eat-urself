@@ -1,6 +1,5 @@
-package com.marspc.goeaturself.repository;
+package com.marspc.goeaturself.fast;
 
-import com.marspc.goeaturself.domain.Fast;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FastRepository extends JpaRepository<Fast,Long> {

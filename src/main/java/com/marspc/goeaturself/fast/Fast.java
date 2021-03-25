@@ -1,4 +1,4 @@
-package com.marspc.goeaturself.domain;
+package com.marspc.goeaturself.fast;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,23 +21,22 @@ public class Fast {
     private Long id;
 
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "previous_fast_id", nullable = false)
+    @Column(name = "previous_fast_id")
     private Long previousFastId;
 
-    @Column(name = "target_fast_time", nullable = false)
+    @Column(name = "target_fast_time")
     private Integer targetFastTime;
 
-    @Column(name = "start_date_and_time", nullable = false)
+    @Column(name = "start_date_and_time")
     LocalDateTime startDateAndTime;
-    //private LocalDate startDateAndTime;
 
-    @Column(name = "end_date_and_time", nullable = false)
+    @Column(name = "end_date_and_time")
     private LocalDateTime endDateAndTime;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private boolean isActive;
 
 

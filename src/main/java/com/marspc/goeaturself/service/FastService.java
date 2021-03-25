@@ -1,7 +1,7 @@
 package com.marspc.goeaturself.service;
 
-import com.marspc.goeaturself.domain.Fast;
-import com.marspc.goeaturself.repository.FastRepository;
+import com.marspc.goeaturself.fast.Fast;
+import com.marspc.goeaturself.fast.FastRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

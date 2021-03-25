@@ -1,6 +1,5 @@
-package com.marspc.goeaturself.controller;
+package com.marspc.goeaturself.fast;
 
-import com.marspc.goeaturself.domain.Fast;
 import com.marspc.goeaturself.service.FastService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
